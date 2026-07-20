@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vikram Suthar — Exterior &amp; Interior 3D Design, Virtual Staging</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+
+  /* ===== Tokens ===== */
+  :root{
+    --hero-bg: #A6906D;
+    --paper: #CDB186;
+    --paper-2: #C2A479;
+    --ink: #1E2A20;
+    --muted: #5B4A36;
+    --line: rgba(30,26,16,0.18);
+    --accent: #8B5E34;
+
+    --display: "Jost", sans-serif;
+    --body: "Karla", sans-serif;
+    --mono: "Jost", sans-serif;
+
+    --max: 1180px;
+    --pad: clamp(20px, 5vw, 64px);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  h1,h2,h3{ font-family: var(--display); font-weight:400; margin: 0; letter-spacing: 0; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .skip-link{
+    position:absolute; left:-999px; top:0;
+    background:var(--ink); color:var(--paper); padding:8px 14px; z-index:200;
+  }
+  .skip-link:focus{ left: 12px; top: 12px; }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .eyebrow{ display:none; }
+
+  /* ===== Nav ===== */
+  .nav{
+    position: sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px var(--pad);
+    background: var(--hero-bg);
+    border-bottom: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .nav__mark{
+    font-family: var(--display); font-size:16px; font-weight:500;
+    text-decoration:none; letter-spacing:0; color: var(--ink);
+    display:flex; align-items:center;
+  }
+  .nav__links{ display:flex; gap: clamp(18px, 3vw, 36px); }
+  .nav__links a{
+    font-family: var(--display); font-size:15px; text-decoration:none;
+    letter-spacing:0; color: var(--ink);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 3px;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+  .nav__links a:hover{ border-color: var(--ink); opacity:0.75; }
+
+  main{ position:relative; z-index:1; }
+
+  .section{ padding: clamp(64px, 10vw, 120px) var(--pad); max-width: var(--max); margin: 0 auto; }
+
+  /* ===== Hero ===== */
+  .hero{
+    background: var(--hero-bg);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: clamp(40px, 6vw, 64px) calc(50vw - 50% + var(--pad)) clamp(64px, 9vw, 96px);
+  }
+  .hero__inner{ max-width: var(--max); margin: 0 auto; }
+  .hero__grid{
+    display:grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px,6vw,72px);
+    align-items:center;
+  }
+  .hero__media .portrait-box{ aspect-ratio: 4/5; }
+  .hero__heading{
+    font-size: clamp(34px, 5.2vw, 58px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 32px;
+    max-width: 14ch;
+  }
+
+  .btn-pill{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family: var(--display); font-weight:600; font-size:13px;
+    letter-spacing:0.07em; text-transform:uppercase;
+    color: var(--paper); background: var(--ink);
+    border:none; border-radius:999px; padding:16px 32px;
+    cursor:pointer; text-decoration:none;
+    transition: background-color 0.3s ease, transform 0.25s ease;
+  }
+  .btn-pill:hover{ background:#101810; transform: translateY(-2px); }
+  .btn-pill .arrow{ transition: transform 0.3s ease; }
+  .btn-pill:hover .arrow{ transform: translateX(4px); }
+
+  /* ===== Profile / About ===== */
+  .profile{
+    background: var(--hero-bg);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: clamp(64px, 10vw, 120px) calc(50vw - 50% + var(--pad));
+    max-width: none;
+  }
+  .profile__grid{
+    display:grid; grid-template-columns: 1fr 1.4fr; gap: clamp(16px,3vw,40px);
+    align-items:start;
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+  .profile__text h2{ font-size: clamp(28px,4vw,40px); margin-bottom: 20px; }
+  .profile__text p{ margin: 0 0 18px; max-width: 56ch; color: var(--muted); }
+  .profile__portrait{ order: -1; max-width: 320px; }
+  .tag-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 28px; }
+  .tag-list li{
+    font-family: var(--display); font-size:13px;
+    border-radius: 999px; background: var(--paper-2);
+    padding: 8px 16px; color: var(--ink);
+  }
+  .portrait-box{
+    aspect-ratio: 3/4; background: var(--paper-2);
+    border: none; border-radius: 18px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding: 0; position:relative;
+    overflow: hidden;
+  }
+  .portrait-box__label{
+    font-family: var(--display); font-size:12px;
+    color: var(--muted); line-height:1.7;
+  }
+
+  /* ===== Work ===== */
+  .work h2{ font-size: clamp(28px,4vw,40px); margin-bottom: 28px; }
+  .tabs{
+    display:flex; gap: clamp(18px,3vw,32px); margin-bottom: 32px;
+    border-bottom: 1px solid var(--line); flex-wrap:wrap;
+  }
+  .tab{
+    font-family: var(--display); font-size:14px;
+    background:none; border:none; cursor:pointer;
+    padding: 0 0 14px; color: var(--muted); border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab:hover{ color: var(--ink); }
+  .tab.is-active{ color: var(--ink); border-bottom-color: var(--ink); }
+
+  .work__grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .work__grid[hidden]{ display:none; }
+  .card{
+    border: none; background: var(--paper-2); padding: 0; border-radius:14px; overflow:hidden;
+  }
+  .card__art{
+    position:relative; overflow:hidden;
+    border-radius: 14px;
+  }
+  .card__art img{
+    width:100%; height:auto; display:block;
+    border-radius: 14px;
+  }
+  .card__render{ opacity:1; }
+  .card__wire{ display:none; }
+  .card__placeholder{
+    background: var(--paper-2); display:flex; align-items:center; justify-content:center;
+  }
+  .card__placeholder-label{
+    font-family: var(--display); font-size:12px; color: var(--muted);
+  }
+
+
+  /* ===== Feature row (faded side images, focused center, with peek navigation) ===== */
+  .feature-row{
+    display:flex; align-items:center; justify-content:center;
+    gap: 18px; flex-wrap: nowrap;
+  }
+  .feature-row__item{
+    flex: 1 1 0; max-width: 190px; margin:0; text-align:center;
+    opacity: 0.4; transform: scale(0.85);
+    transition: opacity 0.625s cubic-bezier(0.4, 0, 0.2, 1), transform 0.625s cubic-bezier(0.4, 0, 0.2, 1), flex 0.625s ease, max-width 0.625s ease;
+    transform-origin: center center;
+  }
+  .feature-row__item--active{
+    flex: 2.2 1 0; max-width: 520px;
+    opacity: 1; transform: scale(1);
+  }
+  .feature-row__item--active .card__art img{
+    max-height: 480px; object-fit: contain;
+  }
+  .feature-row__item .card__art{ border-radius: 14px; margin-bottom: 14px; overflow:hidden; background: var(--paper-2); }
+  .feature-row__item .card__art img{ width:100%; height:auto; display:block; transition: opacity 0.25s ease; }
+  .feature-row__item .card__art img[src=""]{ display:none; }
+  .feature-row__item figcaption{
+    display:flex; justify-content:center;
+    font-family: var(--display); font-size:12px; letter-spacing:.02em;
+    color: var(--muted);
+  }
+  .feature-row__item--active figcaption{ color: var(--ink); }
+
+  .carousel__btn{
+    flex-shrink: 0; background: none; border: none; padding: 6px;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--ink); cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .carousel__btn:hover{ color: var(--accent); transform: scale(1.12); }
+  .carousel__btn svg{ width:24px; height:24px; }
+  .carousel__btn[hidden]{ display:none; }
+
+  /* ===== Virtual Staging Lightbox (transparent background) ===== */
+  .lightbox{
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 40px;
+  }
+  .lightbox.is-open{ opacity: 1; visibility: visible; }
+  .lightbox__img{
+    max-width: min(90vw, 1000px); max-height: 85vh;
+    width: auto; height: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    transform: scale(0.92);
+    transition: transform 0.3s ease;
+  }
+  .lightbox.is-open .lightbox__img{ transform: scale(1); }
+  .lightbox__close{
+    position: absolute; top: 24px; right: 32px;
+    background: var(--ink); color: var(--paper);
+    border: none; border-radius: 50%;
+    width: 44px; height: 44px;
+    font-size: 26px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox__close:hover{ background:#101810; transform: scale(1.08); }
+  .lightbox__nav{
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: var(--ink); color: var(--paper);
+    border: none; border-radius: 50%;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox__nav svg{ width: 22px; height: 22px; }
+  .lightbox__nav:hover{ background:#101810; transform: translateY(-50%) scale(1.08); }
+  .lightbox__nav--prev{ left: 24px; }
+  .lightbox__nav--next{ right: 24px; }
+
+  .work__taglines{
+    display:flex; justify-content:space-between; gap: 48px;
+    margin-top: 52px; padding-top: 28px; border-top: 1px solid var(--line);
+  }
+  .work__tagline{
+    max-width: 360px; margin:0; font-size:15px; line-height:1.65; color: var(--muted);
+  }
+  .work__tagline--right{ text-align:right; }
+
+  /* ===== Schedule / Skills ===== */
+  .schedule h2{ font-size: clamp(28px,4vw,40px); margin-bottom: 36px; }
+  .schedule__layout{ display:block; }
+  .schedule__list{
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px; border-top: 1px solid var(--line);
+  }
+  .schedule__row{
+    display:flex; align-items:baseline; gap: 12px;
+    padding: 16px 0; border-bottom: 1px solid var(--line);
+  }
+  .schedule__mark{
+    width:6px; height:6px; flex-shrink:0; background: var(--accent);
+    transform: translateY(-3px);
+  }
+  .schedule__items{ font-family: var(--body); font-size:15.5px; }
+
+  /* ===== Contact ===== */
+  .contact h2{ font-size: clamp(30px,5vw,52px); max-width: 16ch; margin-bottom: 28px; }
+  .contact__layout{
+    display:grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px,6vw,72px);
+    align-items:start;
+  }
+  .contact__info p{ margin: 0 0 28px; max-width: 46ch; color: var(--muted); }
+  .contact__email{
+    display:inline-block; font-family: var(--display); font-weight:500;
+    font-size: clamp(20px,3vw,26px); text-decoration:none;
+    border-bottom: 2px solid var(--ink); padding-bottom:4px; margin-bottom: 32px;
+  }
+  .contact__links{ display:flex; flex-wrap:wrap; gap: 28px; margin-top: 8px; }
+  .contact__links a{
+    font-family: var(--display); font-size:14px; text-decoration:none;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px; transition: border-color 0.2s, opacity 0.2s;
+  }
+  .contact__links a:hover{ border-color: var(--ink); opacity:0.75; }
+
+  .contact-form{ display:flex; flex-direction:column; gap:20px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field label{
+    font-family: var(--display); font-size:13px; color: var(--muted);
+  }
+  .field input, .field textarea{
+    font-family: var(--body); font-size:15.5px; color: var(--ink);
+    background: transparent; border: none; border-bottom: 1px solid var(--line);
+    padding: 8px 2px; outline: none; transition: border-color 0.25s ease;
+  }
+  .field input:focus, .field textarea:focus{ border-color: var(--ink); }
+  .field textarea{ resize: vertical; min-height: 96px; }
+
+  .btn-send{
+    align-self: flex-start; margin-top: 4px;
+  }
+
+  .form__note{ font-family: var(--body); font-size:13px; color: var(--muted); margin-top:-8px; }
+  .form__status{ font-family: var(--display); font-size:13px; color: var(--muted); min-height:1em; }
+
+  /* ===== Footer ===== */
+  .footer{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 28px var(--pad); max-width: var(--max); margin:0 auto;
+    font-family: var(--display); font-size:13px; color: var(--muted);
+    border-top: 1px solid var(--line);
+  }
+  .footer a{ text-decoration:none; color: var(--muted); }
+  .footer a:hover{ color: var(--ink); }
+
+  /* ===== Reveal on scroll ===== */
+  .reveal{ opacity:0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .card__render, .card__wire{ transition:none; }
+  }
+
+  @media (max-width: 760px){
+    .hero__grid{ grid-template-columns: 1fr; }
+    .hero__media{ max-width: 320px; }
+    .profile__grid{ grid-template-columns: 1fr; }
+    .profile__portrait{ order:-1; max-width: 220px; }
+    .nav__links{ gap:14px; }
+    .schedule__list{ grid-template-columns: 1fr; }
+    .contact__layout{ grid-template-columns: 1fr; }
+    .feature-row{ gap: 8px; }
+    .feature-row__item{ max-width: 26vw; }
+    .feature-row__item--active{ max-width: 48vw; }
+    .feature-row--single .feature-row__item--active{ max-width: 700px; }
+  .feature-row--single .feature-row__item--active .card__art img{ max-height: 500px; object-fit:contain; }
+    .feature-row__item figcaption{ font-size:10.5px; }
+    .carousel__btn svg{ width:18px; height:18px; }
+    .work__taglines{ flex-direction:column; gap:18px; }
+    .work__tagline--right{ text-align:left; }
+    .staging-swiper{ padding: 16px 20px 12px; }
+  }
+
+  /* ===== Nav scroll state ===== */
+  .nav.is-scrolled{ background: var(--paper); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+  /* ===== Section scroll offset ===== */
+  .section{ scroll-margin-top: 76px; }
+  #top{ scroll-margin-top: 0; }
+
+
+
+  /* ===== Hamburger ===== */
+  .nav__toggle{
+    display:none; background:none; border:none; cursor:pointer;
+    width:26px; height:18px; position:relative; padding:0;
+  }
+  .nav__toggle span{
+    display:block; width:100%; height:2px; background: var(--ink);
+    position:absolute; left:0; border-radius:1px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav__toggle span:nth-child(1){ top:0; }
+  .nav__toggle span:nth-child(2){ top:8px; }
+  .nav__toggle span:nth-child(3){ top:16px; }
+  .nav__toggle.is-active span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+  .nav__toggle.is-active span:nth-child(2){ opacity:0; }
+  .nav__toggle.is-active span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+  @media (max-width: 640px){
+    .nav__toggle{ display:block; }
+    .nav__links{
+      position:fixed; top:65px; left:0; right:0; z-index:99;
+      flex-direction:column; background: var(--hero-bg);
+      border-bottom:1px solid var(--line); padding:24px var(--pad);
+      transform:translateY(-110%); opacity:0;
+      transition: transform 0.3s, opacity 0.3s;
+      pointer-events:none;
+    }
+    .nav__links.is-open{ transform:none; opacity:1; pointer-events:auto; }
+  }
+
+
+  /* ===== Before/After compare slider ===== */
+  .card--compare{ position:relative; overflow:hidden; cursor:ew-resize; }
+  .card--compare .card__art{ display:block; position:relative; overflow:hidden; }
+  .card--compare .card__before,
+  .card--compare .card__after{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border:none; border-radius:0; background:var(--paper-2); }
+  .card--compare .card__before{ z-index:2; clip-path: inset(0 50% 0 0); }
+  .card--compare .card__after{ z-index:1; }
+  .card--compare .card__divider{
+    position:absolute; top:0; bottom:0; left:50%; width:3px;
+    background:#fff; z-index:3; pointer-events:none;
+    transform: translateX(-50%);
+  }
+  .card--compare .card__handle{
+    position:absolute; top:50%; left:50%; z-index:4;
+    transform: translate(-50%,-50%);
+    width:44px; height:44px; border-radius:50%;
+    background:#fff; border:none; cursor:ew-resize;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .card--compare .card__handle svg{ width:20px; height:20px; }
+  .card--compare .card__label{
+    position:absolute; bottom:12px; z-index:5;
+    font-family:var(--display); font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:#fff; background:rgba(0,0,0,0.5);
+    padding:4px 10px; border-radius:4px; pointer-events:none;
+  }
+  .card--compare .card__label--before{ left:12px; }
+  .card--compare .card__label--after{ right:12px; }
+  .card--compare .card__wire{ display:none; }
+
+  /* ===== Staging Hero Slider ===== */
+  .staging-hero{
+    margin-bottom: 16px; border-radius: 8px; overflow: hidden;
+    position: relative; cursor: ew-resize;
+    background: var(--paper-2);
+  }
+  .staging-hero .card__art{ aspect-ratio: 16/9; position: relative; }
+  .staging-hero .card__before,
+  .staging-hero .card__after{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border:none; border-radius:0; background:transparent; }
+  .staging-hero .card__before{ z-index:2; clip-path: inset(0 50% 0 0); }
+  .staging-hero .card__after{ z-index:1; }
+  .staging-hero .card__divider{
+    position:absolute; top:0; bottom:0; left:50%; width:3px;
+    background:#fff; z-index:3; pointer-events:none;
+    transform: translateX(-50%);
+  }
+  .staging-hero .card__handle{
+    position:absolute; top:50%; left:50%; z-index:4;
+    transform: translate(-50%,-50%);
+    width:48px; height:48px; border-radius:50%;
+    background:#fff; border:none; cursor:ew-resize;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .staging-hero .card__handle svg{ width:22px; height:22px; }
+  .staging-hero .card__label{
+    display: none;
+  }
+  .staging-hero .card__label--before{ left:16px; }
+  .staging-hero .card__label--after{ right:16px; }
+  /* ===== Staging Cards ===== */
+  .staging-swiper{
+    width: 100%; padding: 10px 50px 10px;
+  }
+  .staging-swiper .swiper-slide{
+    border-radius: 14px; overflow: hidden;
+    cursor: pointer;
+    background: var(--paper-2);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .staging-swiper .swiper-slide img{
+    width: 100%; aspect-ratio: 4/3; object-fit: cover;
+    display: block;
+  }
+  .staging-swiper .swiper-slide img,
+  .staging-swiper .swiper-slide-active img{
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Arrows removed */
+
+  /* Infinite scroll */
+
+  /* Lightbox removed */
+
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#top">
+    <svg viewBox="0 0 44 44" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 2C22 2 30 12 30 18C30 22 26 24 22 24C18 24 14 22 14 18C14 12 22 2 22 2Z" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M12 6C12 6 18 12 20 18C20 22 18 24 14 24C10 24 8 22 8 18C8 14 12 6 12 6Z" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M32 6C32 6 26 12 24 18C24 22 26 24 30 24C34 24 36 22 36 18C36 14 32 6 32 6Z" stroke="currentColor" stroke-width="1.4"/>
+      <circle cx="22" cy="30" r="6" stroke="currentColor" stroke-width="1.4"/>
+      <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+      <circle cx="39" cy="12" r="1.5" fill="currentColor"/>
+    </svg>
+  </a>
+  <button class="nav__toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav__links" aria-label="Section navigation">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ABOUT -->
+  <section class="section profile reveal" id="about">
+    <div class="profile__grid">
+      <div class="profile__text">
+        <h2>About</h2>
+        <p>I'm Vikram Suthar, a 3D designer working across exterior and interior visualization. My focus is helping real estate professionals and homeowners see a space before it's built, furnished, or renovated — through photorealistic exterior renders, styled interior visuals, virtual staging of empty listings, and before/after virtual renovation concepts.</p>
+        <p>With 6 years of hands-on experience in 3D visualization, I've helped agents, builders, and homeowners turn an empty room or an unbuilt façade into something a buyer can actually picture living in — fast turnarounds, accurate lighting and materials, and a clean final image every time.</p>
+        <ul class="tag-list">
+          <li>Exterior Design</li>
+          <li>Interior Design</li>
+          <li>Virtual Staging</li>
+          <li>Virtual Renovation</li>
+        </ul>
+      </div>
+      <div class="profile__portrait">
+        <div class="portrait-box">
+          <img src="images/vikram.webp" alt="Vikram Suthar - 3D Designer" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section work reveal" id="work">
+    <h2>Our Work</h2>
+
+    <div class="tabs" role="tablist" aria-label="Work categories">
+      <button class="tab is-active" role="tab" aria-selected="true" id="tab-interior" data-target="panel-interior">Interior</button>
+      <button class="tab" role="tab" aria-selected="false" id="tab-exterior" data-target="panel-exterior">Exterior</button>
+      <button class="tab" role="tab" aria-selected="false" id="tab-staging" data-target="panel-staging">Virtual Staging</button>
+    </div>
+
+    <div id="panel-interior" role="tabpanel" aria-labelledby="tab-interior">
+      <div class="feature-row" data-feature-carousel="interior">
+        <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Previous image" data-feature-prev>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <figure class="feature-row__item" data-slot="prev">
+          <div class="card__art"><img src="" alt=""></div>
+          <figcaption><span></span></figcaption>
+        </figure>
+        <figure class="feature-row__item feature-row__item--active" data-slot="center">
+          <div class="card__art"><img src="" alt=""></div>
+          <figcaption><span></span></figcaption>
+        </figure>
+        <figure class="feature-row__item" data-slot="next">
+          <div class="card__art"><img src="" alt=""></div>
+          <figcaption><span></span></figcaption>
+        </figure>
+        <button class="carousel__btn carousel__btn--next" type="button" aria-label="Next image" data-feature-next>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="work__taglines">
+        <p class="work__tagline work__tagline--left">Every render starts with light — form follows what the eye should feel first.</p>
+        <p class="work__tagline work__tagline--right">Not just a render, a feeling: how a space will live once it's built.</p>
+      </div>
+    </div>
+
+    <div id="panel-exterior" role="tabpanel" aria-labelledby="tab-exterior" hidden>
+      <div class="feature-row feature-row--single">
+        <figure class="feature-row__item feature-row__item--active">
+          <div class="card__art"><img src="images/exterior-1.webp" alt="Lanai with pool exterior render"></div>
+          <figcaption><span>Lanai &amp; Pool</span></figcaption>
+        </figure>
+      </div>
+      <div class="work__taglines">
+        <p class="work__tagline work__tagline--left">Before the door ever opens, the façade has already told its story.</p>
+        <p class="work__tagline work__tagline--right">Not just a render, a feeling: how a space will live once it's built.</p>
+      </div>
+    </div>
+
+    <div id="panel-staging" role="tabpanel" aria-labelledby="tab-staging" hidden>
+      <!-- Big Before/After Slider -->
+      <div class="staging-hero" data-compare>
+        <div class="card__art"><img class="card__render card__before" src="images/1b.webp" alt="Before virtual staging"><img class="card__render card__after" src="images/1a.webp" alt="After virtual staging"><div class="card__divider"></div><button class="card__handle" aria-label="Drag to compare"><svg viewBox="0 0 24 24" fill="none" stroke="#1E2A20" stroke-width="2" stroke-linecap="round"><path d="M8 4l-6 8 6 8M16 4l6 8-6 8"/></svg></button><span class="card__label card__label--before">Before</span><span class="card__label card__label--after">After</span></div>
+      </div>
+      <!-- Swiper Cards -->
+      <div class="swiper staging-swiper" id="stagingSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/s1.webp" alt="Virtual staging 1"></div>
+          <div class="swiper-slide"><img src="images/s2.webp" alt="Virtual staging 2"></div>
+          <div class="swiper-slide"><img src="images/s3.webp" alt="Virtual staging 3"></div>
+          <div class="swiper-slide"><img src="images/s4.webp" alt="Virtual staging 4"></div>
+          <div class="swiper-slide"><img src="images/s5.webp" alt="Virtual staging 5"></div>
+          <div class="swiper-slide"><img src="images/s6.webp" alt="Virtual staging 6"></div>
+          <div class="swiper-slide"><img src="images/s7.webp" alt="Virtual staging 7"></div>
+          <div class="swiper-slide"><img src="images/s8.webp" alt="Virtual staging 8"></div>
+          <div class="swiper-slide"><img src="images/s9.webp" alt="Virtual staging 9"></div>
+          <div class="swiper-slide"><img src="images/s10.webp" alt="Virtual staging 10"></div>
+          <div class="swiper-slide"><img src="images/s11.webp" alt="Virtual staging 11"></div>
+          <div class="swiper-slide"><img src="images/s12.webp" alt="Virtual staging 12"></div>
+          <div class="swiper-slide"><img src="images/s13.webp" alt="Virtual staging 13"></div>
+          <div class="swiper-slide"><img src="images/s14.webp" alt="Virtual staging 14"></div>
+          <div class="swiper-slide"><img src="images/s15.webp" alt="Virtual staging 15"></div>
+          <div class="swiper-slide"><img src="images/s16.webp" alt="Virtual staging 16"></div>
+          <div class="swiper-slide"><img src="images/s17.webp" alt="Virtual staging 17"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="section schedule reveal" id="expertise">
+    <h2>Expertise</h2>
+    <div class="schedule__layout">
+      <div class="schedule__list">
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Architectural Rendering</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Architectural Animation</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">Aerial 3D Rendering</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Interior Rendering</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Exterior Rendering</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Real Estate Rendering</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Virtual Tour Services</span></div>
+        <div class="schedule__row"><span class="schedule__mark"></span><span class="schedule__items">3D Virtual Spaces</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact reveal" id="contact">
+    <h2>Let's build something.</h2>
+    <div class="contact__layout">
+      <div class="contact__info">
+        <p>Have a project in mind — an exterior render, an interior visual, or virtual staging for a listing? Send a message and I'll get back to you, or reach out directly below.</p>
+        <a class="contact__email" href="mailto:you@example.com">you@example.com</a>
+        <ul class="contact__links">
+          <li><a href="#" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+          <li><a href="#" target="_blank" rel="noopener">ArtStation ↗</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Instagram ↗</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Behance ↗</a></li>
+        </ul>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="field">
+          <label for="cf-name">Name *</label>
+          <input type="text" id="cf-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Email *</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message *</label>
+          <textarea id="cf-message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn-send btn-pill">
+          Send Mail
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <p class="form__note">Opens your email app with the message ready to send.</p>
+        <p class="form__status" id="contact-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 Vikram Suthar</p>
+  <a href="#top">Back to index ↑</a>
+</footer>
+
+<div class="lightbox" id="stagingLightbox" aria-hidden="true">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Close image">&times;</button>
+  <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+
+
+<script>
+  // Contact form -> opens mail app with prefilled message
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = contactForm.name.value.trim();
+      const email = contactForm.email.value.trim();
+      const message = contactForm.message.value.trim();
+      if (!name || !email || !message) {
+        contactStatus.textContent = 'Please fill in all fields.';
+        return;
+      }
+      const recipient = 'you@example.com'; // ← replace with your real email
+      const subject = encodeURIComponent(`New project inquiry from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+      contactStatus.textContent = 'Opening your email app…';
+    });
+  }
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Mobile nav toggle
+  const toggle = document.querySelector('.nav__toggle');
+  const navLinks = document.querySelector('.nav__links');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('is-open');
+      toggle.classList.toggle('is-active');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('is-open');
+        toggle.classList.remove('is-active');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+
+
+
+
+  // Work-section tabs (Exterior / Interior / Virtual Staging)
+  const tabButtons = document.querySelectorAll('.tab');
+  const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('is-active')) return;
+      tabButtons.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+      tabPanels.forEach(panel => panel.setAttribute('hidden', ''));
+      document.getElementById(btn.dataset.target).removeAttribute('hidden');
+    });
+  });
+
+  // Feature-row peek carousel: arrows change which photo sits in the center slot
+  const featureCarouselData = {
+    interior: [
+      { src: 'images/interior-1.webp', alt: 'Kitchen with island interior render', caption: 'Kitchen Island' },
+      { src: 'images/interior-2.webp', alt: 'Living dining kitchen interior render', caption: 'Living & Dining' },
+      { src: 'images/interior-3.webp', alt: 'Loft interior render', caption: 'Loft' },
+      { src: 'images/interior-4.webp', alt: 'Dining wetbar interior render', caption: 'Dining & Wetbar' }
+    ]
+  };
+
+  document.querySelectorAll('[data-feature-carousel]').forEach(root => {
+    const images = featureCarouselData[root.dataset.featureCarousel];
+    if (!images || images.length === 0) return;
+
+    const prevBtn = root.querySelector('[data-feature-prev]');
+    const nextBtn = root.querySelector('[data-feature-next]');
+    const slotPrev = root.querySelector('[data-slot="prev"]');
+    const slotCenter = root.querySelector('[data-slot="center"]');
+    const slotNext = root.querySelector('[data-slot="next"]');
+    if (!slotCenter) return;
+
+    let index = images.length > 1 ? 1 : 0;
+    const n = images.length;
+    let isAnimating = false;
+
+    function fill(slot, img) {
+      if (!slot || !img) return;
+      const imgEl = slot.querySelector('img');
+      const captionEl = slot.querySelector('figcaption span');
+      imgEl.src = img.src;
+      imgEl.alt = img.alt;
+      if (captionEl) captionEl.textContent = img.caption;
+    }
+
+    function render(direction) {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const slots = [slotPrev, slotCenter, slotNext];
+
+      slots.forEach(slot => {
+        if (slot) {
+          slot.style.transition = 'none';
+          slot.style.transform = 'scale(0.85)';
+          slot.style.opacity = '0';
+        }
+      });
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (slotPrev) fill(slotPrev, images[(index - 1 + n) % n]);
+          fill(slotCenter, images[index]);
+          if (slotNext) fill(slotNext, images[(index + 1) % n]);
+
+          slots.forEach(slot => {
+            if (slot) {
+              slot.style.transition = 'transform 0.625s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.625s cubic-bezier(0.4, 0, 0.2, 1)';
+              const isActive = slot.classList.contains('feature-row__item--active');
+              slot.style.transform = isActive ? 'scale(1)' : 'scale(0.85)';
+              slot.style.opacity = isActive ? '1' : '0.4';
+            }
+          });
+
+          setTimeout(() => { isAnimating = false; }, 625);
+        });
+      });
+    }
+
+    function go(delta) {
+      if (isAnimating) return;
+      index = (index + delta + n) % n;
+      render(delta);
+    }
+
+    if (n <= 1) {
+      if (prevBtn) prevBtn.setAttribute('hidden', '');
+      if (nextBtn) nextBtn.setAttribute('hidden', '');
+    } else {
+      if (prevBtn) prevBtn.addEventListener('click', () => go(-1));
+      if (nextBtn) nextBtn.addEventListener('click', () => go(1));
+    }
+
+    render();
+  });
+
+  // Before/After compare slider
+  document.querySelectorAll('[data-compare]').forEach(card => {
+    const art = card.querySelector('.card__art');
+    const before = card.querySelector('.card__before');
+    const divider = card.querySelector('.card__divider');
+    const handle = card.querySelector('.card__handle');
+    let isDragging = false;
+
+    function updateSlider(x) {
+      const rect = art.getBoundingClientRect();
+      let pos = ((x - rect.left) / rect.width) * 100;
+      pos = Math.max(2, Math.min(98, pos));
+      before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+      divider.style.left = pos + '%';
+      handle.style.left = pos + '%';
+    }
+
+    function startDrag(e) {
+      isDragging = true;
+      e.preventDefault();
+      updateSlider(e.touches ? e.touches[0].clientX : e.clientX);
+    }
+
+    function onDrag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      updateSlider(e.touches ? e.touches[0].clientX : e.clientX);
+    }
+
+    function stopDrag() { isDragging = false; }
+
+    art.addEventListener('mousedown', startDrag);
+    art.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
+  });
+
+  // Reveal sections on scroll
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(i => io.observe(i));
+  } else {
+    document.querySelectorAll('.reveal').forEach(i => i.classList.add('in'));
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const stagingSwiper = new Swiper('#stagingSwiper', {
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 3,
+    spaceBetween: 20,
+    speed: 3900,
+    loop: true,
+    loopAdditionalSlides: 10,
+    watchSlidesProgress: true,
+    autoplay: {
+      delay: 0,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+      reverseDirection: false
+    },
+    freeMode: {
+      enabled: true,
+      momentum: false
+    },
+    allowTouchMove: true,
+    simulateTouch: true,
+    touchRatio: 1,
+    breakpoints: {
+      0: { slidesPerView: 1.2, spaceBetween: 12 },
+      640: { slidesPerView: 2.1, spaceBetween: 16 },
+      1024: { slidesPerView: 3, spaceBetween: 20 }
+    }
+  });
+
+  // Click a virtual staging image to open it in a transparent lightbox
+  // (ignores drags/swipes - only opens on a genuine click/tap)
+  const slides = document.querySelectorAll('#stagingSwiper .swiper-slide');
+  const lightbox = document.getElementById('stagingLightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+
+  // All staging images, in order, for prev/next navigation inside the lightbox
+  const stagingImages = Array.from(slides).map(slide => slide.querySelector('img')).filter(Boolean);
+  let currentStagingIndex = 0;
+
+  function showStagingImage(idx) {
+    currentStagingIndex = (idx + stagingImages.length) % stagingImages.length;
+    const imgEl = stagingImages[currentStagingIndex];
+    lightboxImg.src = imgEl.src;
+    lightboxImg.alt = imgEl.alt;
+  }
+
+  function openLightbox(imgEl) {
+    const idx = stagingImages.indexOf(imgEl);
+    showStagingImage(idx === -1 ? 0 : idx);
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    stagingSwiper.autoplay.stop();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    stagingSwiper.autoplay.start();
+  }
+
+  // Track pointer movement so a scroll/drag/swipe never opens the lightbox -
+  // only a real click (minimal movement) does.
+  const CLICK_MOVE_THRESHOLD = 8;
+  slides.forEach((slide) => {
+    const img = slide.querySelector('img');
+    if (!img) return;
+
+    let startX = 0, startY = 0, moved = false;
+
+    slide.addEventListener('pointerdown', (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+      moved = false;
+    });
+
+    slide.addEventListener('pointermove', (e) => {
+      if (Math.abs(e.clientX - startX) > CLICK_MOVE_THRESHOLD || Math.abs(e.clientY - startY) > CLICK_MOVE_THRESHOLD) {
+        moved = true;
+      }
+    });
+
+    slide.addEventListener('click', () => {
+      if (moved) return;
+      openLightbox(img);
+    });
+  });
+
+  lightboxPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showStagingImage(currentStagingIndex - 1);
+  });
+  lightboxNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showStagingImage(currentStagingIndex + 1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'ArrowLeft') showStagingImage(currentStagingIndex - 1);
+    if (e.key === 'ArrowRight') showStagingImage(currentStagingIndex + 1);
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+</script>
+
+</body>
+</html>
